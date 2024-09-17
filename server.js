@@ -60,6 +60,8 @@ sql.connect(config).then(pool => {
 
         try {
             const { subscription_type } = req.body;
+            const start_date = new Date(Date.now()).toISOString()///  .toString();
+            console.log(start_date);
             
             const insertQuery = `
             INSERT INTO subscriptions (subscription_type, start_date, end_date) 
@@ -67,7 +69,7 @@ sql.connect(config).then(pool => {
 
             let result = await pool.request()
                 .input('subscription_type', sql.NVarChar, subscription_type)
-                .input('start_date', sql.Date, Date.now().toString())
+                .input('start_date', sql.Date, start_date)
                 .input('end_date', sql.Date, null)
                 .query(insertQuery);
 
